@@ -1,10 +1,10 @@
 {
   "name": "karma-commonjs-plus",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "A Karma plugin. Test CommonJS modules and allows reference global dependencies and mock internal dependencies",
   "main": "lib/plugin.js",
   "scripts": {
-    "test": "grunt karma"
+    "test": "grunt karma:client"
   },
   "repository": {
     "type": "git",
@@ -32,6 +32,6 @@
   "contributors": [
     "Vojta Jina <vojta.jina@gmail.com>",
     "James Shore <jshore@jamesshore.com>",
-    "Roy Riojas <roy@kno.com>"
+    "Roy Riojas <royriojas@gmail.com>"
   ]
 }
