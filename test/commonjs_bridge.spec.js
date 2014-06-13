@@ -101,5 +101,47 @@ describe('client', function() {
       });
     });
   });
+  
+  describe('commonjs-plus features', function () {
+    
+    beforeEach(function () {
+      window.__cjs_module__ = {};
+      window.__cjs_modules_root__ = '/root';
+      cachedModules = {};
+    });
 
+    afterEach(function () {
+      window.__cjs_module__ = {};
+      window.__clearMocks();
+    });
+    
+    it('should create the global variable for commonjs modules', function () {
+      expect(global).toEqual(window);
+    });
+
+    it('should allow get global dependencies', function () {
+      global.someDep = {};
+      var someDep = require('/','someDep');
+      expect(someDep).toEqual(global.someDep);
+    });
+
+    it('should allow mock dependencies', function () {
+
+      var moduleB = jasmine.createSpyObj('moduleB', ['start']);
+      //window.__cjs_module__ = {};
+      window.__cjs_module__['/moduleA'] = function(require, module, exports) {
+        var moduleB = require('./moduleB');
+        exports.callStart = function() {
+          return moduleB.start();
+        }
+      };
+      var require = requireFn('/');
+      var moduleA = require('./moduleA', {
+        './moduleB' : moduleB
+      });
+
+      moduleA.callStart();
+      expect(moduleB.start).toHaveBeenCalled();
+    });
+  });
 });

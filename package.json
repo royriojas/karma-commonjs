@@ -1,18 +1,19 @@
 {
-  "name": "karma-commonjs",
-  "version": "0.0.8",
-  "description": "A Karma plugin. Test CommonJS modules.",
+  "name": "karma-commonjs-plus",
+  "version": "0.0.9",
+  "description": "A Karma plugin. Test CommonJS modules and allows reference global dependencies and mock internal dependencies",
   "main": "lib/plugin.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "grunt karma"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/karma-runner/karma-commonjs.git"
+    "url": "git://github.com/royriojas/karma-commonjs.git"
   },
   "keywords": [
     "karma-plugin",
-    "commonjs"
+    "commonjs",
+    "mock commonjs dependencies"
   ],
   "author": "Vojta Jina <vojta.jina@gmail.com>",
   "dependencies": {},

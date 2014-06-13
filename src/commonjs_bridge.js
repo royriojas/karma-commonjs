@@ -1,9 +1,23 @@
 var cachedModules = {};
+// make sure the global "global" variable is available to commonjs modules
+window.global = window;
+
+// array for mocks
+var mocks = window.__cjs_mocks = window.__cjs_mocks || {};
+
+window.__clearMocks = function() {
+   window.__cjs_mocks = {}; 
+};
 
 function require(requiringFile, dependency) {
 
     var dependencyPaths = getDependencyPathCandidates(requiringFile, dependency, window.__cjs_modules_root__);
     var dependencyPath;
+
+    var mockDep = mocks[dependency];
+    if (mockDep) {
+        return mockDep;
+    }
 
     for (var i=0; i<dependencyPaths.length; i++) {
 
@@ -25,12 +39,24 @@ function require(requiringFile, dependency) {
       }
     }
 
+    // try to get the dependency from the global scope if registered
+    var dep = window[dependency];
+    
+    if (dep) {
+        return dep;
+    }
+
     //none of the candidate paths was matching - throw
     throw new Error("Could not find module '" + dependency + "' from '" + requiringFile + "'");
 }
 
 function requireFn(basepath) {
-    return function(dependency) {
+    return function(dependency, __mocks) {
+        Object.keys(__mocks || {}).forEach(function (key) {
+            if (__mocks[key]) {
+                mocks[key] = __mocks[key];    
+            }
+        });
         return require(basepath, dependency);
     };
 }
