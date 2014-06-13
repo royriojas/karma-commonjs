@@ -57,7 +57,7 @@ module.exports = (grunt) ->
     bump:
       options:
         commitMessage: 'chore: release v%VERSION%'
-        pushTo: 'upstream'
+        pushTo: 'origin master'
 
   grunt.loadTasks 'tasks'
   grunt.loadNpmTasks 'grunt-contrib-jshint'
@@ -70,7 +70,7 @@ module.exports = (grunt) ->
   grunt.registerTask 'release', 'Build, bump and publish to NPM.', (type) ->
     grunt.task.run [
       'build'
-      'npm-contributors'
+      
       "bump:#{type||'patch'}"
       'npm-publish'
     ]
