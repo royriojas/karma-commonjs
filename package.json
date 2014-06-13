@@ -1,6 +1,6 @@
 {
   "name": "karma-commonjs-plus",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "A Karma plugin. Test CommonJS modules and allows reference global dependencies and mock internal dependencies",
   "main": "lib/plugin.js",
   "scripts": {
