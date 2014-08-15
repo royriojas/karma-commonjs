@@ -9,7 +9,7 @@ window.__clearMocks = function() {
    window.__cjs_mocks = {}; 
 };
 
-function require(requiringFile, dependency) {
+function require(requiringFile, dependency, onlyAutoExec) {
 
     var dependencyPaths = getDependencyPathCandidates(requiringFile, dependency, window.__cjs_modules_root__);
     var dependencyPath;
@@ -26,6 +26,12 @@ function require(requiringFile, dependency) {
       // find module
       var moduleFn = window.__cjs_module__[dependencyPath];
       if (moduleFn !== undefined) {
+
+        if (onlyAutoExec) {
+          if (!moduleFn.autoExecute) {
+            return;
+          }
+        }
 
         // run the module (if necessary)
         var module = cachedModules[dependencyPath];
