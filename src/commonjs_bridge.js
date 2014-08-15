@@ -1,4 +1,4 @@
-var cachedModules = {};
+var cachedModules = window.__cjs_cachedModules = {};
 // make sure the global "global" variable is available to commonjs modules
 window.global = window;
 
@@ -7,6 +7,11 @@ var mocks = window.__cjs_mocks = window.__cjs_mocks || {};
 
 window.__clearMocks = function() {
    window.__cjs_mocks = {}; 
+};
+
+window.__cjs__clearCachedModules = function () {
+  window.__cjs_mocks = {};
+  cachedModules = {};
 };
 
 function require(requiringFile, dependency, onlyAutoExec) {
