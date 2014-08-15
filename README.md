@@ -7,14 +7,14 @@ This is a fork of [karma-commonjs] this adds the following features
 1. **Look for global dependencies**: If a required dependency is not found will be looked in the global namespace (if you're already including the dependency the old school way)
 
 ```javascript
-var $ = require('$'); // if $ module does not exists... will look for window.$
+var $ = require('jQuery'); // if $ module does not exists... will look for window.jQuery
 ```
 
 If you're using browserify you probably are using the `browserify-shim` in that case the best option is to make sure you add the browsers section to your package.json to resolve the same global dependency, like
 
 ```json
-browsers : {
-  '$' : 'global:jQuery'
+"browserify-shim" : {
+  "jQuery" : "global:jQuery"
 }
 ```
 
