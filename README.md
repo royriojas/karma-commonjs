@@ -14,7 +14,7 @@ If you're using browserify you probably are using the `browserify-shim` in that 
 
 ```json
 browsers : {
-  '$' : 'global:$'
+  '$' : 'global:jQuery'
 }
 ```
 
@@ -31,6 +31,25 @@ var moduleA = require('../../moduleA', {
 moduleA.callStart(); // internally call moduleB.start();
 
 expect(mockObject.start).toHaveBeenCalled();
+```
+
+3. **shouldExecFile** config callback. a function to be called for each file processed, the file descriptor is passed to it 
+   as the first parameter. It can be used to only autoExecute the modules that match a given pattern.
+
+4. **processContent** config callback. a function to be called for each file processed, the content and the file descriptor are passed to the function.
+   It can be used to modify the content of the module being processed. Like making sure all the modules run in 'strict mode';
+   or other tasks...
+
+```javascript
+commonjsPreprocessor: {
+ shouldExecFile: function (file) {
+   return file.path.indexOf('/specs/') > -1;
+ },
+ processContent: function (content, file) {
+   // make sure content is executed in stricter mode during testing
+   return "'use strict';\n" + content;
+ }  
+}
 ```
 
 # karma-commonjs-plus
