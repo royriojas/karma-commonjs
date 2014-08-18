@@ -9,8 +9,15 @@
 
 	  // load all modules
     for (var modulePath in window.__cjs_module__) {
-        // only execute the ones that have the autoExecute
+      // only execute the ones that have the autoExecute
+      try {
+        // do not throw if errors happen during loading of the scripts
         require(modulePath, modulePath, true);
+      }
+      catch(ex) {
+        console.error && console.error(ex);
+      }
+
     }
 
 }(this));
