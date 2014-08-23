@@ -2,8 +2,18 @@
 (function(window) {
     "use strict";
 
-     if (window.__cjs_module__ === undefined) throw new Error("Could not find any modules. Did you remember to set 'preprocessors' in your Karma config?");
-     if (window.__cjs_modules_root__ === undefined) throw new Error("Could not find CommonJS module root path. Please report this issue to the karma-commonjs project.");
+    var __errors = [];
+
+    window.__cjs_getInitErrors = function () {
+      return __errors;
+    };
+
+     if (window.__cjs_module__ === undefined) {
+        throw new Error("Could not find any modules. Did you remember to set 'preprocessors' in your Karma config?");
+     }
+     if (window.__cjs_modules_root__ === undefined) {
+        throw new Error("Could not find CommonJS module root path. Please report this issue to the karma-commonjs project.");
+     }
 
 	%CONTENT%
 
@@ -15,9 +25,12 @@
         require(modulePath, modulePath, true);
       }
       catch(ex) {
-        console.error && console.error(ex);
+        __errors.push(ex);
       }
+    }
 
+    if (__errors.length > 0) {
+      console.warn && console.warn('karma-commonjs-plus ' + __errors.length + ' error(s) loading modules... use  `__cjs_getInitErrors();` to retrieve the errors');
     }
 
 }(this));
