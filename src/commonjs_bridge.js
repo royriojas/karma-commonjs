@@ -16,7 +16,7 @@ window.__cjs__clearCachedModules = function () {
 
 function require(requiringFile, dependency, onlyAutoExec) {
 
-    var dependencyPaths = getDependencyPathCandidates(requiringFile, dependency, window.__cjs_modules_root__);
+    var dependencyPaths = getDependencyPathCandidates(requiringFile, dependency, window.__cjs_modules_root__, window.__cjs_module_aliases);
     var dependencyPath;
 
     var mockDep = mocks[dependency];
@@ -72,7 +72,11 @@ function requireFn(basepath) {
     };
 }
 
-function getDependencyPathCandidates(basePath, relativePath, modulesRoot) {
+function getDependencyPathCandidates(basePath, relativePath, modulesRoot, aliases) {
+
+    aliases = aliases || {};
+
+    var aliasFound = aliases[relativePath];
 
     if (!isFullPath(basePath)) throw new Error("basePath should be full path, but was [" + basePath + "]");
 
@@ -85,6 +89,10 @@ function getDependencyPathCandidates(basePath, relativePath, modulesRoot) {
     if (normalizedPath.substr(normalizedPath.length - 3) !== ".js") {
         dependencyPathCandidates.push(normalizedPath + ".js");
         dependencyPathCandidates.push(normalizedPath + "/index.js");
+    }
+
+    if(aliasFound) {
+      dependencyPathCandidates.push(aliasFound);
     }
 
     return dependencyPathCandidates;
