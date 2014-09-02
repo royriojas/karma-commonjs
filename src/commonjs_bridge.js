@@ -6,12 +6,12 @@ window.global = window;
 var mocks = window.__cjs_mocks = window.__cjs_mocks || {};
 
 window.__clearMocks = function() {
-   window.__cjs_mocks = {}; 
+   window.__cjs_mocks = mocks = {}; 
 };
 
 window.__cjs__clearCachedModules = function () {
-  window.__cjs_mocks = {};
-  cachedModules = {};
+  window.__clearMocks();
+  window.__cjs_cachedModules = cachedModules = {};
 };
 
 function require(requiringFile, dependency, onlyAutoExec) {
