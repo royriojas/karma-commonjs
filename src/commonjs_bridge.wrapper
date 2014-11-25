@@ -2,12 +2,7 @@
 (function(window) {
     "use strict";
 
-    var __errors = [];
-
-    window.__cjs_getInitErrors = function () {
-      return __errors;
-    };
-
+    
      if (window.__cjs_module__ === undefined) {
         throw new Error("Could not find any modules. Did you remember to set 'preprocessors' in your Karma config?");
      }
@@ -25,12 +20,8 @@
         require(modulePath, modulePath, true);
       }
       catch(ex) {
-        __errors.push(ex);
+        console.error(ex.message, ex.stack);
       }
-    }
-
-    if (__errors.length > 0) {
-      console.warn && console.warn('karma-commonjs-plus ' + __errors.length + ' error(s) loading modules... use  `__cjs_getInitErrors();` to retrieve the errors');
     }
 
 }(this));
