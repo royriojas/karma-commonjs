@@ -1,6 +1,10 @@
 # Changes added in this fork...
 
-This is a fork of [karma-commonjs] this adds the following features. It is published in the npm repository as `karma-commonjs-plus`. See the details of how to use it after this section ends.
+**Breaking changes in 1.0.0**: 
+ 
+- **processContent** is now async. Beware of it.
+
+This is a fork of [karma-commonjs] this adds the following features. It is published in the npm registry as `karma-commonjs-plus`. See the details of how to use it after this section ends.
 
 0. **Add global "global" variable**. Some commonjs modules, mostly the ones that run in the browser some times need to access the global scope. Accesing the global scope is discouraged and only needed in extremely rare cases... In any case, code that is meant to run in browsers and interact with legacy code sometimes need to do this.
 
@@ -38,9 +42,9 @@ This is a fork of [karma-commonjs] this adds the following features. It is publi
 	 shouldExecFile: function (file) {
 	   return file.path.indexOf('/specs/') > -1;
 	 },
-	 processContent: function (content, file) {
+	 processContent: function (content, file, cb) {
 	   // make sure content is executed in stricter mode during testing
-	   return "'use strict';\n" + content;
+	   cb("'use strict';\n" + content);
 	 }  
 	}
 	```
